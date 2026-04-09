@@ -36,6 +36,7 @@ mkdir adamzagorski92_project
 cd adamzagorski92_project
 git clone https://github.com/adamzagorski92/handmade-crafting.git
 cd handmade-crafting
+cp .env.example .env #/Paste your API to .env. You can get it for free on https://www.coingecko.com/en/api. !WARNING! REMEMBER ADD .env to .gitigonre file!
 pnpm install
 pnpm run dev
 ```
