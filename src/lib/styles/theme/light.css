@@ -1,0 +1,17 @@
+:root,
+[data-theme="light"] {
+  --text: var(--grey-500);
+  --text-h: var(--grey-900);
+  --bg: var(--white);
+  --border: var(--grey-300);
+  --code-bg: var(--grey-100);
+  --accent: var(--accent-200);
+  --accent-bg: var(--accent-bg-200);
+  --accent-border: var(--accent-border-200);
+  --social-bg: var(--overlay-light);
+  --shadow: var(--shadow-sm);
+}
+
+:root[data-theme="light"] #social .button-icon {
+  filter: invert(1) brightness(2);
+}

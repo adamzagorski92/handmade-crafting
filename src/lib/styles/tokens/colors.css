@@ -1,0 +1,29 @@
+:root {
+  --white: #fff;
+  --grey-100: #f4f3ec;
+  --grey-200: #f3f4f6;
+  --grey-300: #e5e4e7;
+  --grey-400: #9ca3af;
+  --grey-500: #6b6375;
+  --grey-600: #2e303a;
+  --grey-700: #1f2028;
+  --grey-800: #16171d;
+  --grey-900: #08060d;
+
+  --accent-100: #c084fc;
+  --accent-200: #aa3bff;
+
+  --accent-bg-100: rgba(192, 132, 252, 0.15);
+  --accent-bg-200: rgba(170, 59, 255, 0.1);
+
+  --accent-border-100: rgba(192, 132, 252, 0.5);
+  --accent-border-200: rgba(170, 59, 255, 0.5);
+
+  --overlay-dark: rgba(47, 48, 58, 0.5);
+  --overlay-light: rgba(244, 243, 236, 0.5);
+
+  --shadow-sm:
+    rgba(0, 0, 0, 0.05) 0 4px 6px -2px, rgba(0, 0, 0, 0.1) 0 10px 15px -3px;
+  --shadow-md:
+    rgba(0, 0, 0, 0.25) 0 4px 6px -2px, rgba(0, 0, 0, 0.4) 0 10px 15px -3px;
+}
