@@ -8,15 +8,15 @@ const PAGE_SIZE = 10;
 
 type Platforms = Record<string, string>;
 
-interface CoinList {
+interface CoinListItem {
   id: string;
   symbol: string;
   name: string;
   platforms: Platforms;
 }
 
-const CoinList = () => {
-  const [coinListData, setCoinListData] = useState<CoinList[] | null>([]);
+const CoinListItem = () => {
+  const [coinListData, setCoinListData] = useState<CoinListItem[] | null>(null);
   const [error, setError] = useState<string>("");
   const [isPending, setIsPending] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -30,14 +30,14 @@ const CoinList = () => {
 
   useEffect(() => {
     const controller = new AbortController();
-    fetcher(
-      coinList,
-      setCoinListData,
-      setError,
-      CREDENCIAL,
-      controller.signal,
-      setIsPending,
-    );
+    fetcher<CoinListItem[]>({
+      url: coinList,
+      dataSetter: setCoinListData,
+      errorSetter: setError,
+      credentials: CREDENCIAL,
+      signal: controller.signal,
+      loadingSetter: setIsPending,
+    });
 
     return () => controller.abort();
   }, []);
@@ -62,7 +62,7 @@ const CoinList = () => {
               onClick={() => setCurrentPage((prev) => prev - 1)}
               disabled={currentPage === 1}
             >
-              Previews
+              Previous
             </button>
 
             <span>
@@ -82,4 +82,4 @@ const CoinList = () => {
   );
 };
 
-export default CoinList;
+export default CoinListItem;

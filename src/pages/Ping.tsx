@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ENDPOINTS } from "../lib/constans/endpoints";
 import { fetcher } from "../lib/utils/fetcher";
 import { CREDENCIAL } from "../lib/constans/credentials";
@@ -11,33 +11,54 @@ const Ping = () => {
   const { ping } = ENDPOINTS;
   const [data, setData] = useState<PingResponse | null>(null);
   const [error, setError] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const controllerRef = useRef<AbortController | null>(null);
+  const stateReset = () => {
+    setData(null);
+    setError("");
+    setIsLoading(true);
+  };
+
+  const fetchData = useCallback(() => {
+    controllerRef.current?.abort();
+
+    const controller = new AbortController();
+    controllerRef.current = controller;
+
+    stateReset();
+
+    fetcher<PingResponse>({
+      url: ping,
+      dataSetter: setData,
+      errorSetter: setError,
+      credentials: CREDENCIAL,
+      signal: controller.signal,
+      loadingSetter: setIsLoading,
+    });
+  }, []);
 
   useEffect(() => {
-    const controller = new AbortController();
-    fetcher<PingResponse>(
-      ping,
-      setData,
-      setError,
-      CREDENCIAL,
-      controller.signal,
-      setIsLoading,
-    );
-
-    return () => controller.abort();
+    fetchData();
+    return () => controllerRef.current?.abort();
   }, []);
+
+  const handleCancel = () => controllerRef.current?.abort();
+  const handleRetry = () => fetchData();
   return (
     <>
       <h1>Ping Page</h1>
       <div>
-        {data && !isLoading ? (
+        {isLoading && <p>Loading...</p>}
+        {!isLoading && data && (
           <p>
-            <strong>This ping come from backend:</strong> {data.gecko_says}
+            <strong>Ping:</strong> {data.gecko_says}
           </p>
-        ) : (
-          <p>Loading...</p>
         )}
+        {!isLoading && !data && !error && <p>No data</p>}
       </div>
+      <button onClick={handleCancel}>Abort request</button>
+      <button onClick={handleRetry}>Refresh request</button>
       <div>{error && `Błąd: ${error}`}</div>
     </>
   );

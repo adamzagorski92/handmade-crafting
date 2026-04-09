@@ -23,3 +23,7 @@
 | navigator.deviceMemory        | 4                  | RAM w GB (przybliżony)           |
 | navigator.cookieEnabled       | true / false       | czy cookies są włączone          |
 | navigator.maxTouchPoints      | 0 / 5              | czy urządzenie dotykowe          |
+
+## Journal
+
+- I have to trigger all errors come from backend (based on [documentation]('https://docs.coingecko.com/docs/common-errors-rate-limit')):
