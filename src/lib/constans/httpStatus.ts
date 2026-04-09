@@ -1,4 +1,4 @@
-export const HTTP_STATUS: Record<number, string> = {
+export const HTTP_STATUS = {
   400: "Bad Request",
   401: "Unauthorized",
   403: "Forbidden",
@@ -15,4 +15,7 @@ export const HTTP_STATUS: Record<number, string> = {
     "You have provided incorrect API key credentials. If you are using Pro API key, please change your root URL from api.coingecko.com to pro-api.coingecko.com",
   10011:
     "You have provided incorrect API key credentials. If you are using Demo API key, please change your root URL from pro-api.coingecko.com to api.coingecko.com",
-};
+} as const;
+
+export type HttpStatusCode = keyof typeof HTTP_STATUS;
+export type HttpStatusDescription = (typeof HTTP_STATUS)[HttpStatusCode];

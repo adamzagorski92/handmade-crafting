@@ -1,6 +1,11 @@
+import {
+  HTTP_STATUS,
+  type HttpStatusCode,
+  type HttpStatusDescription,
+} from "../constans/httpStatus";
+
 export const getResponseStatusText = (
-  KVList: Record<number, string>,
+  KVList: typeof HTTP_STATUS,
   httpStatus: number,
-): string => {
-  return KVList[httpStatus] ?? String(httpStatus);
-};
+): HttpStatusDescription | "Unknown error" =>
+  KVList[httpStatus as HttpStatusCode] ?? "Unknown error";
