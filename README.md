@@ -1,29 +1,53 @@
-## Preference:
+# CoinGecko crypto handmade app
 
-### CSS @media — preferencje systemowe
+Hello!
+This project is a fully hand-crafted project about myself. I decided to go this way
+because AI was suppressing my deeper thinking about code and what is truly
+shameful. AI killed my muscle memory for typing code without assistance.
+Sometimes I genuinely forgot how to write something as simple as this:
 
-| Media query                  | Wartości                    | Co wykrywa                        |
-| ---------------------------- | --------------------------- | --------------------------------- |
-| prefers-color-scheme         | light / dark                | tryb jasny/ciemny                 |
-| prefers-reduced-motion       | reduce / no-preference      | czy użytkownik wyłączył animacje  |
-| prefers-contrast             | more / less / no-preference | wysoki kontrast (accessibility)   |
-| prefers-reduced-transparency | reduce / no-preference      | czy wyłączył przezroczystości     |
-| prefers-reduced-data         | reduce / no-preference      | oszczędzanie danych (słabe łącze) |
-| forced-colors                | active / none               | Windows High Contrast Mode        |
-| inverted-colors              | inverted / none             | odwrócone kolory (accessibility)  |
+```javascript
+let isCodeOnlyWitthAI = true;
 
-### JavaScript navigator — dane urządzenia/przeglądarki
+const braveButton = document.getElementById("braveButton");
+const switchToBrave = () => {
+  isCodeOnlyWitthAI = false;
+  checkConfidence();
+};
 
-| Właściwość                    | Przykład wartości  | Co zwraca                        |
-| ----------------------------- | ------------------ | -------------------------------- |
-| navigator.language            | "pl-PL"            | główny język przeglądarki        |
-| navigator.languages           | ["pl-PL", "en-US"] | lista preferowanych języków      |
-| navigator.onLine              | true / false       | czy jest połączenie z internetem |
-| navigator.hardwareConcurrency | 8                  | liczba rdzeni CPU                |
-| navigator.deviceMemory        | 4                  | RAM w GB (przybliżony)           |
-| navigator.cookieEnabled       | true / false       | czy cookies są włączone          |
-| navigator.maxTouchPoints      | 0 / 5              | czy urządzenie dotykowe          |
+const checkConfidence = () => {
+  if (isCodeOnlyWitthAI) {
+    console.log("I'm very shameFull in Programming");
+  } else {
+    console.log("I'm very brave");
+  }
+};
 
-## Journal
+braveButton.addEventListener("click", switchToBrave);
+checkConfidence();
+```
 
-- I have to trigger all errors come from backend (based on [documentation]('https://docs.coingecko.com/docs/common-errors-rate-limit')):
+That is not the way to become a great software engineer.
+
+## How to run project?
+
+```bash
+mkdir adamzagorski92_project
+cd adamzagorski92_project
+git clone https://github.com/adamzagorski92/handmade-crafting.git
+cd handmade-crafting
+pnpm install
+pnpm run dev
+```
+
+## API ENGINE - how to develop?
+
+1. Add a new endpoint to [endpoints.ts](./src/lib/constans/endpoints.ts) look at [Endpoint Showcase](https://docs.coingecko.com/docs/endpoint-showcase)
+2. **(optional)** If you want to create a new page for a new endpoint, add the path to [routes.ts](./src/lib/constans/routes.ts) and export it to other files
+3. Add a new type for the data structure in [CoinGeckoService.ts](./src/lib/api/coinGecko.service.ts)
+4. Create a new object consisting of: name, parameters, and [fetcher.ts](./src/lib/utils/fetcher.ts) — (**IMPORTANT** Follow the same object structure as in [CoinGeckoService](./src/lib/api/coinGecko.service.ts))
+5. Implement [useFetch.ts](./src/lib/hooks/useFetch.ts) following the same pattern as in [CoinList.tsx](./src/pages/CoinList.tsx) or [Ping.tsx](./src/pages/Ping.tsx)
+6. If you need to use [useFetch.ts](./src/lib/hooks/useFetch.ts) multiple times in a single component, I prefer calling it 2 or 3 times with different alias names for the returned values before creating a new wrapper around useFetch
+7. HTTP error codes can be found in [httpStatus.ts](./src/lib/constans/httpStatus.ts) — these are based on the [CoinGecko error documentation](https://docs.coingecko.com/docs/common-errors-rate-limit)
+8. **(optional)** add cashing inside [fetcher.ts](./src/lib/utils/fetcher.ts) or switch you approuch to [Tanstack Query](https://tanstack.com/query/latest)
+9. **(recommended)** Research potential security vulnerabilities and edge cases in the fetcher abstraction
